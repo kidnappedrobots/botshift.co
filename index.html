@@ -413,91 +413,88 @@
     }
 
     /* ── PROCESS ── */
+    .process-wrapper {
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    /* The horizontal track line running through step numbers */
+    .process-track {
+      position: absolute;
+      top: 22px; /* center of step-number (44px / 2) */
+      left: 22px; /* center of first step number */
+      right: 22px; /* center of last step number */
+      height: 2px;
+      background: var(--border);
+    }
+
+    .process-track-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.15s ease-out;
+    }
+
     .process-grid {
       display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap: 0;
-      align-items: start;
-      margin-top: 2.5rem;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      position: relative;
     }
 
     .process-step {
-      padding: 0 1.5rem;
-    }
-
-    .process-connector {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
+      text-align: center;
     }
 
     .step-number {
       width: 44px;
       height: 44px;
       border-radius: 4px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.9rem;
       font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+      border: 2px solid var(--border);
+      margin-bottom: 1.25rem;
+      position: relative;
+      transition: color 0.4s, border-color 0.4s, background 0.4s;
+    }
+
+    .process-step.active .step-number {
       color: var(--bg-primary);
       background: var(--accent);
-      margin-bottom: 1rem;
+      border-color: var(--accent);
     }
 
     .process-step .step-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: var(--accent);
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 0.5rem;
+      transition: color 0.4s;
+    }
+
+    .process-step.active .step-label {
+      color: var(--accent);
     }
 
     .process-step p {
       font-size: 0.95rem;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       line-height: 1.7;
+      max-width: 300px;
+      margin: 0 auto;
+      transition: color 0.4s;
     }
 
-    .process-bar-track {
-      height: 2px;
-      background: var(--border);
-      margin-bottom: 2.5rem;
-      margin-top: 2rem;
-      position: relative;
-      border-radius: 1px;
-    }
-
-    .process-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 1px;
-      transition: width 0.1s linear;
-    }
-
-    .process-bar-dots {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      transform: translateY(-50%);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .process-bar-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: background 0.3s;
-    }
-
-    .process-bar-dot.active {
-      background: var(--accent);
+    .process-step.active p {
+      color: var(--text-secondary);
     }
 
     /* ── VISION ── */
@@ -933,12 +930,31 @@
         gap: 2rem;
       }
 
-      .process-connector {
+      .process-track {
         display: none;
       }
 
       .process-step {
-        padding: 0;
+        text-align: left;
+      }
+
+      .process-step p {
+        margin: 0;
+      }
+
+      /* All steps visible on mobile — no scroll activation needed */
+      .process-step .step-number {
+        color: var(--bg-primary);
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .process-step .step-label {
+        color: var(--accent);
+      }
+
+      .process-step p {
+        color: var(--text-secondary);
       }
 
       .philosophy-divider {
@@ -1058,31 +1074,26 @@
     <div class="container">
       <div class="section-label fade-in">// process</div>
       <h2 class="section-title fade-in">Our Process To Grow KPIs</h2>
-      <div class="process-bar-track fade-in" id="processBarTrack">
-        <div class="process-bar-fill" id="processBarFill"></div>
-        <div class="process-bar-dots">
-          <div class="process-bar-dot" id="dot1"></div>
-          <div class="process-bar-dot" id="dot2"></div>
-          <div class="process-bar-dot" id="dot3"></div>
+      <div class="process-wrapper fade-in">
+        <div class="process-track">
+          <div class="process-track-fill" id="processBarFill"></div>
         </div>
-      </div>
-      <div class="process-grid fade-in">
-        <div class="process-step">
-          <div class="step-number">01</div>
-          <div class="step-label">Automate</div>
-          <p>We automate necessary jobs inside your business, end-to-end.</p>
-        </div>
-        <div class="process-connector"></div>
-        <div class="process-step">
-          <div class="step-number">02</div>
-          <div class="step-label">Optimize</div>
-          <p>We create data engines to optimize automated workflows to maximize revenue.</p>
-        </div>
-        <div class="process-connector"></div>
-        <div class="process-step">
-          <div class="step-number">03</div>
-          <div class="step-label">Physicalize</div>
-          <p>We make your business unforgettable through AI physical presence.</p>
+        <div class="process-grid">
+          <div class="process-step" id="step1">
+            <div class="step-number">01</div>
+            <div class="step-label">Automate</div>
+            <p>We automate necessary jobs inside your business, end-to-end.</p>
+          </div>
+          <div class="process-step" id="step2">
+            <div class="step-number">02</div>
+            <div class="step-label">Optimize</div>
+            <p>We create data engines to optimize automated workflows to maximize revenue.</p>
+          </div>
+          <div class="process-step" id="step3">
+            <div class="step-number">03</div>
+            <div class="step-label">Physicalize</div>
+            <p>We make your business unforgettable through AI physical presence.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1348,29 +1359,27 @@
       observer.observe(el);
     });
 
-    // Process section scroll progress bar
+    // Process section scroll progress — line fills through step numbers
     var processSection = document.getElementById('what-we-do');
     var processBarFill = document.getElementById('processBarFill');
-    var dots = [document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
+    var steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3')];
 
     if (processSection && processBarFill) {
       window.addEventListener('scroll', function() {
         var rect = processSection.getBoundingClientRect();
-        var sectionTop = rect.top;
-        var sectionHeight = rect.height;
         var windowHeight = window.innerHeight;
 
-        // Progress starts when section enters viewport, ends when it leaves
-        var start = sectionTop - windowHeight * 0.7;
-        var end = sectionTop + sectionHeight - windowHeight * 0.3;
+        // Progress: 0 when section top hits 70% viewport, 1 when bottom hits 30%
+        var start = rect.top - windowHeight * 0.7;
+        var end = rect.top + rect.height - windowHeight * 0.3;
         var progress = Math.max(0, Math.min(1, -start / (end - start)));
 
         processBarFill.style.width = (progress * 100) + '%';
 
-        // Activate dots at 0%, 50%, 100%
-        dots[0].classList.toggle('active', progress >= 0.05);
-        dots[1].classList.toggle('active', progress >= 0.4);
-        dots[2].classList.toggle('active', progress >= 0.75);
+        // Each step activates as the line reaches it (0%, 50%, 100%)
+        steps[0].classList.toggle('active', progress >= 0.08);
+        steps[1].classList.toggle('active', progress >= 0.45);
+        steps[2].classList.toggle('active', progress >= 0.82);
       }, { passive: true });
     }
   </script>
