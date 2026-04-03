@@ -1,0 +1,1605 @@
+# BotShift Landing Page Redesign — Industrial Terminal
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Rewrite the BotShift.co landing page from AI-slop (cyan-on-dark, Inter, glowing cards) to an Industrial Terminal aesthetic (near-black, warm orange, engineered feel).
+
+**Architecture:** Complete rewrite of the single `index.html` file. All CSS is inline (`<style>` block), all JS is inline (`<script>` block). No build tools, no external dependencies beyond Google Fonts. Images already placed in `images/generated/`.
+
+**Tech Stack:** HTML, CSS (custom properties, grid, flexbox, clamp, keyframe animations), vanilla JS (IntersectionObserver, random selection).
+
+**Reference:** Read the full spec at `docs/superpowers/specs/2026-04-03-landing-page-redesign-design.md` before starting any task.
+
+---
+
+### Task 1: CSS Foundation — Variables, Reset, Typography, and Nav
+
+**Files:**
+- Modify: `index.html` (rewrite the `<head>`, `<style>` opening, and `<nav>` HTML)
+
+This task replaces the entire `<head>` and writes the CSS variables, reset, typography imports, nav styles, and nav HTML. Everything after the nav will be empty — subsequent tasks fill in sections.
+
+- [ ] **Step 1: Rewrite `<head>` through end of nav CSS**
+
+Replace everything from `<!DOCTYPE html>` through the nav CSS rules. The new code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot Shift — Forward Compatible AI for the Physical World</title>
+  <meta name="description" content="Bot Shift builds AI operators for real-world businesses — starting in software, expanding into physical presence.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-elevated: #111111;
+      --border: #1a1a1a;
+      --accent: #ff6b35;
+      --text-primary: #f5f5f5;
+      --text-secondary: #777777;
+      --text-muted: #444444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: var(--bg-primary) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.9 !important; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+```
+
+- [ ] **Step 2: Write the nav HTML**
+
+Replace the existing `<nav>` HTML (keep same structure, update CTA class):
+
+```html
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="/images/logo.png" alt="Bot Shift">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#what-we-do">What We Do</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#why">Why Bot Shift</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#build" class="nav-cta">Build Your Agent</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+Open `index.html` in browser. The nav should show: logo left, links right, orange CTA button with sharp 4px corners. Background is solid `#111111`, no blur.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: rewrite CSS foundation and nav with Industrial Terminal design system"
+```
+
+---
+
+### Task 2: Hero Section — Left-aligned headline + Boot Sequence + ASCII Robot
+
+**Files:**
+- Modify: `index.html` (add hero CSS after nav CSS, rewrite hero HTML)
+
+- [ ] **Step 1: Add hero CSS**
+
+Add after the nav CSS block in `<style>`:
+
+```css
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .hero-text { max-width: 600px; }
+
+    .hero-prefix {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 .hl { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .hero-cta:hover { opacity: 0.9; }
+    .hero-cta svg { width: 18px; height: 18px; }
+
+    .hero-status {
+      margin-top: 3rem;
+      display: flex;
+      gap: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+
+    .hero-status .dot {
+      color: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── BOOT SEQUENCE ── */
+    .hero-right {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .boot-sequence {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+
+    .boot-line {
+      opacity: 0;
+      animation: typeIn 0.3s forwards;
+    }
+
+    .boot-line:nth-child(1) { animation-delay: 0.2s; }
+    .boot-line:nth-child(2) { animation-delay: 0.7s; }
+    .boot-line:nth-child(3) { animation-delay: 1.2s; }
+    .boot-line:nth-child(4) { animation-delay: 1.7s; }
+    .boot-line:nth-child(5) { animation-delay: 2.2s; }
+    .boot-line:nth-child(6) { animation-delay: 2.8s; }
+
+    .boot-ok { color: var(--accent); }
+    .boot-dim { color: var(--text-muted); }
+    .boot-info { color: var(--text-secondary); }
+
+    @keyframes typeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--accent);
+      animation: cursorBlink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── ASCII ROBOT ── */
+    .ascii-robot {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      line-height: 1.35;
+      white-space: pre;
+      color: #666;
+      opacity: 0;
+      animation: typeIn 0.6s 3.2s forwards;
+    }
+
+    .ascii-robot .eye {
+      color: var(--accent);
+      animation: blink 4s infinite;
+    }
+
+    .ascii-robot .eye-r {
+      color: var(--accent);
+      animation: blink 4s infinite;
+      animation-delay: 0.1s;
+    }
+
+    .ascii-robot .ac { color: var(--accent); }
+    .ascii-robot .br { color: #999; }
+
+    @keyframes blink {
+      0%, 88%, 92%, 100% { opacity: 1; }
+      90% { opacity: 0; }
+    }
+```
+
+- [ ] **Step 2: Write hero HTML**
+
+Replace the existing hero `<section>` with:
+
+```html
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-prefix">// forward compatible ai</div>
+        <h1>We build <span class="hl">AI operators</span> for real-world businesses</h1>
+        <p class="hero-sub">Starting in software, expanding into physical presence.</p>
+        <a href="#build" class="hero-cta">
+          Build Your Agent
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+        <div class="hero-status">
+          <span><span class="dot">●</span> systems online</span>
+          <span>agents: 4 active</span>
+          <span>uptime: 99.97%</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="boot-sequence">
+          <div class="boot-line"><span class="boot-dim">$</span> <span class="boot-info">botshift init</span></div>
+          <div class="boot-line"><span class="boot-ok">[ok]</span> loading agent framework <span class="boot-dim">............</span> <span class="boot-ok">done</span></div>
+          <div class="boot-line"><span class="boot-ok">[ok]</span> connecting business systems <span class="boot-dim">......</span> <span class="boot-ok">done</span></div>
+          <div class="boot-line"><span class="boot-ok">[ok]</span> calibrating spatial awareness <span class="boot-dim">....</span> <span class="boot-ok">done</span></div>
+          <div class="boot-line"><span class="boot-ok">[ok]</span> all systems operational</div>
+          <div class="boot-line"><span style="color: var(--accent); font-weight: 600;">READY_</span><span class="cursor-blink"></span></div>
+        </div>
+        <div class="ascii-robot" id="asciiRobot"></div>
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+The hero should show: left-aligned headline with orange highlighted text, monospace prefix, CTA button, status bar. Right side shows boot sequence animating line by line, then an empty robot container (JS fills it in Task 10).
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add hero section with boot sequence and ASCII robot placeholder"
+```
+
+---
+
+### Task 3: Results Section — 1px Grid + Image
+
+**Files:**
+- Modify: `index.html` (add results CSS, rewrite results HTML)
+
+- [ ] **Step 1: Add results CSS**
+
+Add after hero CSS in `<style>`:
+
+```css
+    /* ── SECTIONS (shared) ── */
+    section {
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    /* ── RESULTS ── */
+    #results { background: var(--bg-elevated); }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .result-cell {
+      background: var(--bg-elevated);
+      padding: 2rem;
+    }
+
+    .result-cell .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .result-cell .num svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .result-cell h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-cell p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .results-hero-img {
+      width: 100%;
+      max-width: 900px;
+      display: block;
+      margin: 3rem auto 0;
+    }
+```
+
+- [ ] **Step 2: Write results HTML**
+
+Replace the existing results `<section>`:
+
+```html
+  <!-- RESULTS -->
+  <section id="results">
+    <div class="container">
+      <div class="section-label fade-in">// impact</div>
+      <h2 class="section-title fade-in">We Build For Business Impact</h2>
+      <div class="results-grid fade-in">
+        <div class="result-cell">
+          <div class="num">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
+            01
+          </div>
+          <h3>Drive Revenue</h3>
+          <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
+        </div>
+        <div class="result-cell">
+          <div class="num">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            02
+          </div>
+          <h3>Scale Efficiency</h3>
+          <p>Offload 80% of mundane administrative and repetitive tasks to digital agents, allowing your human team to focus on high-value guest interactions.</p>
+        </div>
+        <div class="result-cell">
+          <div class="num">
+            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
+            03
+          </div>
+          <h3>Attract Attention</h3>
+          <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
+        </div>
+      </div>
+      <img src="/images/generated/results.png" alt="Phone showing AI upsell offer in hotel lobby with robot walking past" class="results-hero-img fade-in">
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+Results section: 3-column grid with 1px dividers (not card borders). Each cell has an SVG icon, monospace number, title, description. The results.png image (orange UI phone) shows below.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add results section with 1px grid layout"
+```
+
+---
+
+### Task 4: Process Section — Restyled Step Funnel
+
+**Files:**
+- Modify: `index.html` (add process CSS, rewrite process HTML)
+
+- [ ] **Step 1: Add process CSS**
+
+```css
+    /* ── PROCESS ── */
+    .what-funnel {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2.5rem;
+      max-width: 650px;
+    }
+
+    .what-step {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .step-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--bg-primary);
+      background: var(--accent);
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-line {
+      flex: 1;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .what-step:last-child .step-line { display: none; }
+
+    .step-content {
+      flex: 1;
+      padding: 0.5rem 0 2.5rem 1.5rem;
+    }
+
+    .step-content .step-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    .what-step:first-child .step-content p {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+```
+
+- [ ] **Step 2: Write process HTML**
+
+```html
+  <!-- PROCESS -->
+  <section id="what-we-do">
+    <div class="container">
+      <div class="section-label fade-in">// process</div>
+      <h2 class="section-title fade-in">Our Process To Grow KPIs</h2>
+      <div class="what-funnel">
+        <div class="what-step fade-in">
+          <div class="step-indicator">
+            <div class="step-number">01</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-label">Automate</div>
+            <p>We automate necessary jobs inside your business, end-to-end.</p>
+          </div>
+        </div>
+        <div class="what-step fade-in">
+          <div class="step-indicator">
+            <div class="step-number">02</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-label">Optimize</div>
+            <p>We create data engines to optimize automated workflows to maximize revenue.</p>
+          </div>
+        </div>
+        <div class="what-step fade-in">
+          <div class="step-indicator">
+            <div class="step-number">03</div>
+          </div>
+          <div class="step-content">
+            <div class="step-label">Physicalize</div>
+            <p>We make your business unforgettable through AI physical presence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+3-step vertical funnel: orange square numbers (01, 02, 03) with 1px connecting line, monospace step labels, descriptions. No progress bars, no companion image.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add restyled process funnel section"
+```
+
+---
+
+### Task 5: Vision Section — Hero Image + Text
+
+**Files:**
+- Modify: `index.html` (add vision CSS, write vision HTML)
+
+- [ ] **Step 1: Add vision CSS**
+
+```css
+    /* ── VISION ── */
+    #vision { background: var(--bg-elevated); }
+
+    .vision-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .vision-graphic img {
+      width: 100%;
+      display: block;
+    }
+
+    .vision-text .section-desc {
+      max-width: none;
+    }
+```
+
+- [ ] **Step 2: Write vision HTML**
+
+```html
+  <!-- VISION -->
+  <section id="vision">
+    <div class="container">
+      <div class="vision-content">
+        <div class="vision-graphic fade-in">
+          <img src="/images/generated/vision-hero.png" alt="Modern robot walking through a hotel corridor alongside guests">
+        </div>
+        <div class="vision-text">
+          <div class="section-label fade-in">// the vision</div>
+          <h2 class="section-title fade-in">AI is already here. The robots are coming.</h2>
+          <p class="section-desc fade-in">Bot Shift builds AI agents that are forward compatible. We develop high-functioning digital operators that navigate your business's digital world today, while being architected to inhabit the physical world of tomorrow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+Two-column: full-width robot corridor image left, text right. The image has no border-radius — raw edge. This is the main photographic moment on the page.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add vision section with hero image"
+```
+
+---
+
+### Task 6: Philosophy Section — 50/50 Split
+
+**Files:**
+- Modify: `index.html` (add philosophy CSS, write philosophy HTML)
+
+- [ ] **Step 1: Add philosophy CSS**
+
+```css
+    /* ── PHILOSOPHY ── */
+    .philosophy-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .philosophy-split {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .philosophy-side {
+      padding: 2.5rem;
+    }
+
+    .philosophy-side.tomorrow {
+      background: rgba(255, 107, 53, 0.03);
+    }
+
+    .philosophy-divider {
+      background: var(--border);
+    }
+
+    .philosophy-side .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .philosophy-side h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .philosophy-side p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .philosophy-quote {
+      margin-top: 2.5rem;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      max-width: 720px;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--bg-elevated);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .philosophy-quote span { color: var(--accent); }
+```
+
+- [ ] **Step 2: Write philosophy HTML**
+
+Note: the "Tomorrow" card copy is fixed from the broken original.
+
+```html
+  <!-- PHILOSOPHY -->
+  <section id="philosophy">
+    <div class="container">
+      <div class="philosophy-header">
+        <div class="section-label fade-in">// the philosophy</div>
+        <h2 class="section-title fade-in">Build Once, Deploy Everywhere</h2>
+        <p class="section-desc fade-in">We don't just build AI chatbots; we build Physically-Ready Personas.</p>
+      </div>
+      <div class="philosophy-split fade-in">
+        <div class="philosophy-side">
+          <div class="label">Today</div>
+          <h3>Software-First</h3>
+          <p>Our agents integrate into your website, your booking systems, and your guest communications to drive revenue and handle mundane operations immediately.</p>
+        </div>
+        <div class="philosophy-divider"></div>
+        <div class="philosophy-side tomorrow">
+          <div class="label">Tomorrow</div>
+          <h3>Physically-Ready</h3>
+          <p>Because our agents are built with spatial and situational logic from day one, they are ready to "cross over" into robotic hardware the moment you are ready.</p>
+        </div>
+      </div>
+      <blockquote class="philosophy-quote fade-in">
+        "The best time to prepare for the physical AI revolution is <span>before</span> everyone else realizes it's happening."
+      </blockquote>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+50/50 split with 1px vertical divider. Left side: darker bg. Right side: subtle orange tint. Monospace labels. Quote block below with orange left border. No images.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add philosophy section with 50/50 split layout"
+```
+
+---
+
+### Task 7: Agents Section — Vertical Roster
+
+**Files:**
+- Modify: `index.html` (add agents CSS, write agents HTML)
+
+- [ ] **Step 1: Add agents CSS**
+
+```css
+    /* ── AGENTS ── */
+    #agents { background: var(--bg-elevated); }
+
+    .agents-intro {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 700px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .agents-roster {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .agent-row {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      gap: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agent-row:last-child { border-bottom: none; }
+
+    .agent-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .agent-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .agent-info { flex: 1; }
+
+    .agent-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .agent-info p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .agent-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+
+    .agents-more {
+      margin-top: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+```
+
+- [ ] **Step 2: Write agents HTML**
+
+```html
+  <!-- AGENTS -->
+  <section id="agents">
+    <div class="container">
+      <div class="section-label fade-in">// your ai team</div>
+      <h2 class="section-title fade-in">Your AI Team</h2>
+      <p class="agents-intro fade-in">Our agents aren't just chatbots; they are functional members of your team designed for specific business outcomes.</p>
+      <div class="agents-roster fade-in">
+        <div class="agent-row">
+          <div class="agent-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M10 2L18 10L10 18L2 10Z" stroke="var(--accent)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="agent-info">
+            <h3>The Concierge</h3>
+            <p>A multi-lingual digital expert that handles bookings, local recommendations, and instant guest requests across mobile, kiosk, and robotic interfaces.</p>
+          </div>
+          <div class="agent-status">Active</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="agent-info">
+            <h3>Sales &amp; Upsell</h3>
+            <p>An intelligent operator that analyzes guest behavior and timing to offer personalized upgrades, spa bookings, or dining reservations exactly when the guest is most likely to convert.</p>
+          </div>
+          <div class="agent-status">Active</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-icon">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="var(--accent)" stroke-width="1.5"/><path d="M3 8H17" stroke="var(--accent)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="agent-info">
+            <h3>Operations Architect</h3>
+            <p>A backend agent that monitors inventory, schedules maintenance, and coordinates between departments to ensure the physical facility runs as smoothly as the software.</p>
+          </div>
+          <div class="agent-status">Active</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-icon">
+            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="var(--accent)" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="agent-info">
+            <h3>Brand Ambassador</h3>
+            <p>A high-visibility agent (often housed in our robotic hardware) designed to engage passersby, capture leads, and provide a memorable physical "face" for your digital infrastructure.</p>
+          </div>
+          <div class="agent-status">Active</div>
+        </div>
+      </div>
+      <p class="agents-more fade-in">+ custom agents built for your specific business needs</p>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+Vertical roster with 4 agent rows. Each has: circular icon with orange stroke, name, description, "Active" status label. 1px borders between rows. No images.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add agents section with vertical roster layout"
+```
+
+---
+
+### Task 8: Why Bot Shift + Team + CTA + Footer Sections
+
+**Files:**
+- Modify: `index.html` (add CSS for why, team, CTA, footer; write all HTML)
+
+This task covers the remaining 4 sections. They follow established patterns from earlier tasks.
+
+- [ ] **Step 1: Add CSS for why, team, CTA, footer**
+
+```css
+    /* ── WHY ── */
+    .why-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 780px;
+      margin-bottom: 2rem;
+    }
+
+    .why-lead strong { color: var(--text-primary); }
+
+    .why-statement {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .why-context {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 780px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .why-blocks {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .why-block {
+      padding: 2rem 2.5rem;
+    }
+
+    .why-block + .why-block {
+      border-top: 1px solid var(--border);
+    }
+
+    .why-block h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .why-block p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* ── TEAM ── */
+    #team { background: var(--bg-elevated); }
+
+    .team-intro {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .team-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .team-photo {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .team-info { padding: 1.5rem; }
+
+    .team-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-role {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .team-info ul { list-style: none; }
+
+    .team-info li {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .team-info li:last-child { border-bottom: none; }
+    .team-info li strong { color: var(--text-primary); }
+
+    .team-company-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .team-company-logos img,
+    .team-company-logos svg {
+      height: 18px;
+      width: auto;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .team-company-logos img:hover,
+    .team-company-logos svg:hover { opacity: 1; }
+
+    .team-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .team-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    .team-links a:hover { opacity: 0.7; }
+    .team-links a svg { width: 14px; height: 14px; }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .cta-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .cta-btn:hover { opacity: 0.9; }
+    .cta-btn svg { width: 20px; height: 20px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+    }
+```
+
+- [ ] **Step 2: Write HTML for Why, Team, CTA, Footer sections**
+
+```html
+  <!-- WHY -->
+  <section id="why">
+    <div class="container">
+      <div class="section-label fade-in">// why bot shift</div>
+      <h2 class="section-title fade-in">Results Over Technology</h2>
+      <p class="why-lead fade-in"><strong>We work backwards from your business outcomes.</strong> Most AI companies sell you a tool and ask you to find a use for it. We do the opposite. We identify your revenue bottlenecks and deploy the specific AI agents required to break them. We don't deliver nebulous technical projects — we deliver operational results.</p>
+      <p class="why-statement fade-in">We don't sell technology. We sell revenue, cost reductions, and experiences.</p>
+      <p class="why-context fade-in">Most companies are focused on either software or hardware. We focus on company KPIs while ensuring your AI is ready for the physical world tomorrow.</p>
+      <div class="why-blocks fade-in">
+        <div class="why-block">
+          <h3>Zero Migration</h3>
+          <p>When the robots arrive, you don't start over. Your agent already knows your customers, your inventory, and your brand voice.</p>
+        </div>
+        <div class="why-block">
+          <h3>Future-Proofed ROI</h3>
+          <p>Every dollar spent on AI automation today is a down payment on your future physical presence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <div class="section-label fade-in">// the team</div>
+      <h2 class="section-title fade-in">Built by Operators</h2>
+      <p class="team-intro fade-in">Repeat founders with multiple exits. Former Amazon and Meta executives who have built for 100M+ users. Pioneers in AI and Robotics.</p>
+      <div class="team-grid">
+        <div class="team-card fade-in">
+          <img src="/resources/alexprofile.jpg" alt="Alexander Rivan Ronalds" class="team-photo">
+          <div class="team-info">
+            <h3>Alexander Rivan Ronalds</h3>
+            <p class="team-role">CEO &amp; Co-Founder</p>
+            <ul>
+              <li><strong>Meta:</strong> Led Facebook's multi-billion dollar gaming business, serving a global ecosystem of 400M+ gamers.</li>
+              <li><strong>Twitch (Amazon):</strong> Launched the flagship Pulse product on the twitch.tv homepage for 100M+ users.</li>
+              <li><strong>Exit Success:</strong> Built and sold Balanced Worlds to Kabam (later acquired by Netmarble for ~$1B).</li>
+              <li><strong>Auki Labs:</strong> A decentralized perception network that allows AI to see and interact with the physical world.</li>
+            </ul>
+            <div class="team-company-logos">
+              <img src="/resources/alexlogos/meta-transparent.png" alt="Meta" style="height: 22px;">
+              <img src="/resources/alexlogos/download.svg" alt="Amazon" style="height: 20px;">
+              <img src="/resources/alexlogos/download%20(1).svg" alt="Twitch" style="height: 16px;">
+              <img src="/resources/alexlogos/download%20(1).png" alt="Kabam" style="height: 18px;">
+              <img src="/resources/alexlogos/auki-logo.png" alt="Auki" style="height: 20px;">
+            </div>
+            <div class="team-links">
+              <a href="https://www.linkedin.com/in/expatbrat" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://www.kidnappedrobots.com" target="_blank" rel="noopener">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                Website
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <img src="/resources/bohdan-white.jpg" alt="Bohdan Petryshyn" class="team-photo">
+          <div class="team-info">
+            <h3>Bohdan Petryshyn</h3>
+            <p class="team-role">CTO &amp; Co-Founder</p>
+            <ul>
+              <li><strong>Redocly:</strong> Staff Software Engineer, led the company's flagship product powering API documentation for thousands of enterprise clients including Fortune 500 companies.</li>
+              <li><strong>HubSpot:</strong> Software Engineer delivering strategic partner integrations handling tens of millions of daily requests.</li>
+              <li><strong>AI Research:</strong> Outperformed GitHub Copilot by 55% using 25x less resources (LLM code completion); published work on deep reinforcement learning for autonomous driving (MDPI).</li>
+              <li><strong>Open Source:</strong> Creator of Basti — 200k+ downloads, 400 GitHub stars, contributions from Amazon staff. Cut AWS bastion costs by 97%.</li>
+            </ul>
+            <div class="team-links">
+              <a href="https://github.com/BohdanPetryshyn" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <img src="/resources/turing-headshot.jpg" alt="Adam Turing" class="team-photo">
+          <div class="team-info">
+            <h3>Adam Turing</h3>
+            <p class="team-role">Lead Test Subject &amp; Co-Founder</p>
+            <ul>
+              <li><strong>Durability Testing:</strong> Successfully survived 4,200+ unintended "rapid decelerations" into drywall during early spatial mapping trials.</li>
+              <li><strong>Sensor Calibration:</strong> Personally verified that the "Staircase Detection" algorithm was, in fact, a suggestion rather than a rule.</li>
+              <li><strong>Legacy Data:</strong> Still retains 14% of the original firmware from the 2024 "Coffee Spillage Incident"&mdash;now utilized as a cautionary training set for all new agents.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="build">
+    <h2 class="fade-in">Build Your Agent</h2>
+    <p class="fade-in">Ready to deploy AI that grows with your business into the physical world?</p>
+    <a href="https://calendly.com" class="cta-btn fade-in" target="_blank" rel="noopener">
+      Build Your Agent
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+  </section>
+
+  <footer>
+    &copy; 2026 Bot Shift. All rights reserved.
+  </footer>
+```
+
+- [ ] **Step 3: Verify in browser**
+
+Check all 4 sections render correctly:
+- Why: typographic hierarchy, 1px divider between Zero Migration and Future-Proofed ROI blocks
+- Team: 3-column grid, real photos, 4px radius, no hover glow, company logos, social links
+- CTA: centered, dot-grid background, orange button
+- Footer: monospace text, 1px top border
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add why, team, CTA, and footer sections"
+```
+
+---
+
+### Task 9: Responsive Breakpoints
+
+**Files:**
+- Modify: `index.html` (add responsive CSS and fade-in animation CSS at end of `<style>`)
+
+- [ ] **Step 1: Add animation and responsive CSS**
+
+Add before the closing `</style>` tag:
+
+```css
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text { max-width: 700px; }
+
+      .hero-status { justify-content: center; }
+
+      .vision-content {
+        grid-template-columns: 1fr;
+      }
+
+      .vision-graphic { order: -1; }
+
+      .vision-graphic img { max-width: 600px; }
+
+      .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .team-grid .team-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 480px;
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0; right: 0;
+        flex-direction: column;
+        background: var(--bg-elevated);
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: flex; }
+
+      .hero { min-height: auto; padding: 8rem 1.5rem 4rem; }
+
+      .hero-right { display: none; }
+
+      .results-grid,
+      .philosophy-split {
+        grid-template-columns: 1fr;
+      }
+
+      .philosophy-divider {
+        height: 1px;
+        width: 100%;
+      }
+
+      .team-grid { grid-template-columns: 1fr; }
+
+      .team-grid .team-card:last-child {
+        max-width: none;
+      }
+
+      section { padding: 4rem 1.25rem; }
+      .cta-section { padding: 5rem 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .section-title { font-size: 1.5rem; }
+      .team-photo { height: 220px; }
+      .results-grid { grid-template-columns: 1fr; }
+    }
+```
+
+- [ ] **Step 2: Verify at multiple widths**
+
+Test at 1440px, 1024px, 768px, and 480px. Check:
+- Hero stacks on tablet (boot sequence + robot hidden on mobile)
+- Results grid: 3 → 2 → 1 columns
+- Philosophy split stacks with horizontal divider on mobile
+- Team: 3 → 2 → 1 columns
+- Agents roster stays vertical at all sizes (natural)
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add scroll animations and responsive breakpoints"
+```
+
+---
+
+### Task 10: JavaScript — ASCII Robot Randomization + Scroll Observer
+
+**Files:**
+- Modify: `index.html` (rewrite the `<script>` block at end of `<body>`)
+
+- [ ] **Step 1: Write the complete JavaScript block**
+
+Replace the existing `<script>` block before `</body>`:
+
+```html
+  <script>
+    // Mobile nav toggle
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // ASCII Robot randomization
+    var robots = [
+      '      Y__      \n    _/<span class="eye">q</span> <span class="eye-r">p</span>\\_    \n     \\_<span class="ac">O</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /| |\\     \n    (0) (0)   ',
+      '     .---.     \n    } <span class="eye">u</span> <span class="eye-r">u</span> {    \n     \\_<span class="ac">r</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /7 [|     \n   \\/7  [|_    ',
+      '     _._._     \n    -)<span class="eye">q</span> <span class="eye-r">q</span>(-    \n     \\_<span class="ac">e</span>_/     \n   ,"|+  |".   \n   _\\|+__|/_   \n     /7 [|     \n   \\/7  [|_    ',
+      '     .---.     \n    } <span class="eye">q</span> <span class="eye-r">p</span> {    \n     \\_<span class="ac">-</span>_/     \n}-. /\\--o/\\ .-{\n   " |___| "   \n     // \\\\     \n    _\\\\ //_    ',
+      '     |---|     \n     |<span class="eye">n</span> <span class="eye-r">n</span>|     \n     |_<span class="ac">-</span>_|     \n    /|(\\)|\\    \n   d |___| b   \n     |_|_|     \n     /_|_\\     ',
+      '      __i      \n     [<span class="eye">o</span> <span class="eye-r">o</span>]     \n      <span class="ac">]</span>-<span class="ac">[</span>      \n   .=(+++)=.   \no="  (___)  "=o\n     |_|_|     \n     /_|_\\     '
+    ];
+
+    var robotEl = document.getElementById('asciiRobot');
+    if (robotEl) {
+      robotEl.innerHTML = robots[Math.floor(Math.random() * robots.length)];
+    }
+
+    // Scroll-triggered fade-in
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+  </script>
+```
+
+- [ ] **Step 2: Verify in browser**
+
+Reload the page multiple times — a different ASCII robot should appear each time in the hero. Eyes should blink orange. Boot sequence should animate line by line, then the robot fades in. Scroll down — sections should fade in as they enter the viewport.
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add index.html
+git commit -m "feat: add ASCII robot randomization and scroll observer"
+```
+
+---
+
+### Task 11: Cleanup — Remove Old CSS, Delete Unused Images
+
+**Files:**
+- Modify: `index.html` — verify no old CSS rules remain (the full rewrite should have replaced everything, but double-check)
+- Delete: unused image files from `images/generated/`
+
+- [ ] **Step 1: Verify no old CSS variables or rules leaked through**
+
+Search `index.html` for any remnants of the old design:
+- `--bg-secondary` (old variable — should be gone)
+- `--blue-` (old blue variables — should be gone)
+- `--glow` (old glow shadow — should be gone)
+- `backdrop-filter` (should be gone)
+- `border-radius: 16px` (should be 4px max now)
+- `Inter` font reference (should be gone)
+
+If any are found, remove them.
+
+- [ ] **Step 2: Delete unused generated images**
+
+```bash
+cd /Users/bohdan/Source/botshift.co/images/generated
+rm -f hero-bg.png process.png philosophy-today.png philosophy-tomorrow.png
+rm -f agent-concierge.png agent-sales.png agent-operations.png agent-ambassador.png agents-all.png
+rm -f cta-bg.png vision.png
+```
+
+Keep: `results.png`, `vision-hero.png`
+
+- [ ] **Step 3: Full page review**
+
+Open the site and scroll through the entire page. Check:
+- Nav: solid dark bg, orange CTA, no blur
+- Hero: left-aligned text + boot sequence + random ASCII robot with blinking eyes
+- Results: 1px grid, orange SVG icons, results.png image below
+- Process: vertical funnel with orange square numbers, no images
+- Vision: full-width photo left, text right
+- Philosophy: 50/50 split with 1px divider, no images, fixed copy
+- Agents: vertical roster with SVG icons, no images
+- Why: typographic layout with 1px divider between blocks
+- Team: real photos, sharp corners, editorial feel
+- CTA: dot-grid bg, orange button
+- Footer: monospace, minimal
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add -A
+git commit -m "chore: remove unused images and verify clean redesign"
+```

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; color: #f5f5f5; font-family: system-ui, sans-serif; }
+  h2 { font-size: 24px; font-weight: 800; padding: 40px 40px 8px; letter-spacing: -0.03em; }
+  .sub { font-size: 14px; color: #777; padding: 0 40px 32px; }
+
+  .section { margin: 0 40px 48px; }
+  .section h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #ff6b35; }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .option {
+    background: #0a0a0a;
+    cursor: pointer;
+    transition: outline 0.2s;
+    position: relative;
+  }
+  .option:hover { outline: 2px solid #ff6b35; outline-offset: -2px; }
+  .option.selected { outline: 3px solid #ff6b35; outline-offset: -3px; }
+  .option.selected::after {
+    content: '✓ SELECTED';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ff6b35;
+    color: #0a0a0a;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  .option img {
+    width: 100%;
+    display: block;
+  }
+
+  .option-info {
+    padding: 16px 20px;
+  }
+  .option-info .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #ff6b35;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .option-info p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+  }
+  .rec {
+    display: inline-block;
+    background: rgba(255,107,53,0.15);
+    color: #ff6b35;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<h2>Pick your images</h2>
+<p class="sub">Click to select your preference for each section. My recommendations are marked.</p>
+
+<div class="section">
+  <h3>Vision Hero — "AI is already here. The robots are coming."</h3>
+  <div class="compare">
+    <div class="option" onclick="select(this, 'vision')">
+      <img src="vision-1.png" alt="Vision attempt 1">
+      <div class="option-info">
+        <div class="label">Attempt 1 — hotel lobby, warm classic</div>
+        <p>Pepper-style robot in a traditional luxury hotel lobby. Chandeliers, marble, warm wood. Guests with luggage. Classic editorial feel.</p>
+      </div>
+    </div>
+    <div class="option" onclick="select(this, 'vision')">
+      <img src="vision-3.png" alt="Vision attempt 3">
+      <div class="option-info">
+        <div class="label">Attempt 3 — corridor, cinematic <span class="rec">recommended</span></div>
+        <p>Tall sleek robot with orange LED accents, low angle shot in modern hotel corridor. Natural daylight. People walking casually. More cinematic, more editorial. The orange accents match our color scheme.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Agent Hero — "Your AI Team"</h3>
+  <div class="compare">
+    <div class="option" onclick="select(this, 'agent')">
+      <img src="agent-2.png" alt="Agent attempt 2">
+      <div class="option-info">
+        <div class="label">Attempt 2 — hotel reception check-in</div>
+        <p>Tablet-faced robot at hotel reception desk, checking in a businessman. Wood panels, brass fixtures. Professional, warm. More "business service" focused.</p>
+      </div>
+    </div>
+    <div class="option" onclick="select(this, 'agent')">
+      <img src="agent-3.png" alt="Agent attempt 3">
+      <div class="option-info">
+        <div class="label">Attempt 3 — restaurant service <span class="rec">recommended</span></div>
+        <p>Small friendly robot with orange eyes carrying drinks through a busy upscale restaurant. Exposed brick, candlelight, smiling diners. Feels completely real — documentary photography at its best.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function select(el, group) {
+  document.querySelectorAll(`.option`).forEach(opt => {
+    if (opt.closest('.section').querySelector('h3').textContent.includes(group === 'vision' ? 'Vision' : 'Agent')) {
+      opt.classList.remove('selected');
+    }
+  });
+  el.classList.toggle('selected');
+}
+</script>
+
+</body>
+</html>
