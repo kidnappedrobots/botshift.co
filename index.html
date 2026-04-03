@@ -656,24 +656,17 @@
     }
 
     /* ── WHY ── */
-    .why-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-      margin-top: 2rem;
-    }
-
-    .why-text .why-lead {
+    .why-lead {
       font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.7;
+      max-width: 780px;
       margin-bottom: 1.5rem;
     }
 
-    .why-text .why-lead strong { color: var(--text-primary); }
+    .why-lead strong { color: var(--text-primary); }
 
-    .why-text .why-statement {
+    .why-statement {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.2rem, 2vw, 1.5rem);
       font-weight: 700;
@@ -681,10 +674,12 @@
       margin-bottom: 1rem;
     }
 
-    .why-text .why-context {
+    .why-context {
       font-size: 0.95rem;
       color: var(--text-secondary);
+      max-width: 780px;
       line-height: 1.7;
+      margin-bottom: 2.5rem;
     }
 
     .why-cards {
@@ -698,7 +693,7 @@
     }
 
     .why-card {
-      padding: 1.5rem;
+      padding: 2rem;
       background: var(--bg-primary);
     }
 
@@ -712,14 +707,14 @@
 
     .why-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
     }
 
     .why-card p {
       color: var(--text-secondary);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       line-height: 1.6;
     }
 
@@ -972,7 +967,7 @@
         color: var(--text-secondary);
       }
 
-      .why-layout {
+      .why-cards {
         grid-template-columns: 1fr;
       }
 
@@ -1241,23 +1236,19 @@ o="  (___)  "=o
     <div class="container">
       <div class="section-label fade-in">// why bot shift</div>
       <h2 class="section-title fade-in">Results Over Technology</h2>
-      <div class="why-layout fade-in">
-        <div class="why-text">
-          <p class="why-lead"><strong>We work backwards from your business outcomes.</strong> Most AI companies sell you a tool and ask you to find a use for it. We do the opposite. We identify your revenue bottlenecks and deploy the specific AI agents required to break them.</p>
-          <p class="why-statement">We don't sell technology. We sell revenue, cost reductions, and experiences.</p>
-          <p class="why-context">Most companies are focused on either software or hardware. We focus on company KPIs while ensuring your AI is ready for the physical world tomorrow.</p>
+      <p class="why-lead fade-in"><strong>We work backwards from your business outcomes.</strong> Most AI companies sell you a tool and ask you to find a use for it. We do the opposite. We identify your revenue bottlenecks and deploy the specific AI agents required to break them.</p>
+      <p class="why-statement fade-in">We don't sell technology. We sell revenue, cost reductions, and experiences.</p>
+      <p class="why-context fade-in">Most companies are focused on either software or hardware. We focus on company KPIs while ensuring your AI is ready for the physical world tomorrow.</p>
+      <div class="why-cards fade-in">
+        <div class="why-card">
+          <div class="card-num">01</div>
+          <h3>Zero Migration</h3>
+          <p>When the robots arrive, you don't start over. Your agent already knows your customers, your inventory, and your brand voice.</p>
         </div>
-        <div class="why-cards">
-          <div class="why-card">
-            <div class="card-num">01</div>
-            <h3>Zero Migration</h3>
-            <p>When the robots arrive, you don't start over. Your agent already knows your customers, your inventory, and your brand voice.</p>
-          </div>
-          <div class="why-card">
-            <div class="card-num">02</div>
-            <h3>Future-Proofed ROI</h3>
-            <p>Every dollar spent on AI automation today is a down payment on your future physical presence.</p>
-          </div>
+        <div class="why-card">
+          <div class="card-num">02</div>
+          <h3>Future-Proofed ROI</h3>
+          <p>Every dollar spent on AI automation today is a down payment on your future physical presence.</p>
         </div>
       </div>
     </div>
