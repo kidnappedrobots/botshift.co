@@ -602,8 +602,8 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      background: rgba(255, 107, 53, 0.03);
       border-right: 1px solid var(--border);
+      width: 140px;
     }
 
     .agent-card-right {
@@ -951,34 +951,44 @@
 
       .process-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 0;
       }
 
+      /* Vertical track on mobile */
       .process-track {
-        display: none;
+        top: 22px;
+        left: 22px;
+        right: auto;
+        width: 2px;
+        height: calc(100% - 44px);
+      }
+
+      .process-track-fill {
+        width: 100% !important;
+        height: 0% !important;
+        transition: height 0.15s ease-out !important;
       }
 
       .process-step {
         text-align: left;
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 0 1.25rem;
+        padding-bottom: 2rem;
+      }
+
+      .process-step .step-number {
+        grid-row: 1 / 3;
+        margin-bottom: 0;
+      }
+
+      .process-step .step-label {
+        align-self: end;
       }
 
       .process-step p {
         margin: 0;
-      }
-
-      /* All steps visible on mobile — no scroll activation needed */
-      .process-step .step-number {
-        color: var(--bg-primary);
-        background: var(--accent);
-        border-color: var(--accent);
-      }
-
-      .process-step .step-label {
-        color: var(--accent);
-      }
-
-      .process-step p {
-        color: var(--text-secondary);
+        grid-column: 2;
       }
 
       .why-cards {
@@ -1439,7 +1449,12 @@ o="  (___)  "=o
         var end = rect.top + rect.height * 0.1;
         var progress = Math.max(0, Math.min(1, -start / (end - start)));
 
-        processBarFill.style.width = (progress * 100) + '%';
+        var isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          processBarFill.style.height = (progress * 100) + '%';
+        } else {
+          processBarFill.style.width = (progress * 100) + '%';
+        }
 
         // Each step activates as the line reaches it (0%, 50%, 100%)
         steps[0].classList.toggle('active', progress >= 0.08);
