@@ -380,7 +380,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 2rem;
       font-weight: 800;
-      color: var(--border);
+      color: #2a2a2a;
       margin-bottom: 1.25rem;
       letter-spacing: -0.03em;
     }
@@ -593,19 +593,29 @@
 
     .agent-card {
       background: var(--bg-elevated);
-      padding: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
     }
 
-    .agent-card-header {
+    .agent-card-left {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(255, 107, 53, 0.03);
+      border-right: 1px solid var(--border);
+    }
+
+    .agent-card-right {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .agent-ascii {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
+      font-size: 0.75rem;
       line-height: 1.2;
       white-space: pre;
       color: #555;
@@ -624,11 +634,17 @@
 
     .agent-ascii .ac { color: var(--accent); }
 
+    .agent-info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
     .agent-info h3 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
     }
 
     .agent-info p {
@@ -1157,7 +1173,7 @@
       <p class="agents-intro fade-in">Our agents aren't just chatbots; they are functional members of your team designed for specific business outcomes.</p>
       <div class="agents-roster fade-in">
         <div class="agent-card">
-          <div class="agent-card-header">
+          <div class="agent-card-left">
             <div class="agent-ascii">      Y__
     _/<span class="eye">q</span> <span class="eye-r">p</span>\_
      \_<span class="ac">O</span>_/
@@ -1165,15 +1181,19 @@
 o="  (___)  "=o
      /| |\
     (0) (0)</div>
-            <div class="agent-status">Active</div>
           </div>
-          <div class="agent-info">
-            <h3>The Concierge</h3>
-            <p>A multi-lingual digital expert that handles bookings, local recommendations, and instant guest requests across mobile, kiosk, and robotic interfaces.</p>
+          <div class="agent-card-right">
+            <div class="agent-info-header">
+              <h3>The Concierge</h3>
+              <div class="agent-status">Active</div>
+            </div>
+            <div class="agent-info">
+              <p>A multi-lingual digital expert that handles bookings, local recommendations, and instant guest requests across mobile, kiosk, and robotic interfaces.</p>
+            </div>
           </div>
         </div>
         <div class="agent-card">
-          <div class="agent-card-header">
+          <div class="agent-card-left">
             <div class="agent-ascii">     .---.
     } <span class="eye">u</span> <span class="eye-r">u</span> {
      \_<span class="ac">r</span>_/
@@ -1181,15 +1201,19 @@ o="  (___)  "=o
 o="  (___)  "=o
      /7 [|
    \/7  [|_</div>
-            <div class="agent-status">Active</div>
           </div>
-          <div class="agent-info">
-            <h3>Sales &amp; Upsell</h3>
-            <p>An intelligent operator that analyzes guest behavior and timing to offer personalized upgrades, spa bookings, or dining reservations exactly when the guest is most likely to convert.</p>
+          <div class="agent-card-right">
+            <div class="agent-info-header">
+              <h3>Sales &amp; Upsell</h3>
+              <div class="agent-status">Active</div>
+            </div>
+            <div class="agent-info">
+              <p>An intelligent operator that analyzes guest behavior and timing to offer personalized upgrades, spa bookings, or dining reservations exactly when the guest is most likely to convert.</p>
+            </div>
           </div>
         </div>
         <div class="agent-card">
-          <div class="agent-card-header">
+          <div class="agent-card-left">
             <div class="agent-ascii">     |---|
      |<span class="eye">n</span> <span class="eye-r">n</span>|
      |_<span class="ac">-</span>_|
@@ -1197,15 +1221,19 @@ o="  (___)  "=o
    d |___| b
      |_|_|
      /_|_\</div>
-            <div class="agent-status">Active</div>
           </div>
-          <div class="agent-info">
-            <h3>Operations Architect</h3>
-            <p>A backend agent that monitors inventory, schedules maintenance, and coordinates between departments to ensure the physical facility runs as smoothly as the software.</p>
+          <div class="agent-card-right">
+            <div class="agent-info-header">
+              <h3>Operations Architect</h3>
+              <div class="agent-status">Active</div>
+            </div>
+            <div class="agent-info">
+              <p>A backend agent that monitors inventory, schedules maintenance, and coordinates between departments to ensure the physical facility runs as smoothly as the software.</p>
+            </div>
           </div>
         </div>
         <div class="agent-card">
-          <div class="agent-card-header">
+          <div class="agent-card-left">
             <div class="agent-ascii">      __i
      [<span class="eye">o</span> <span class="eye-r">o</span>]
       <span class="ac">]</span>-<span class="ac">[</span>
@@ -1213,11 +1241,15 @@ o="  (___)  "=o
 o="  (___)  "=o
      |_|_|
      /_|_\</div>
-            <div class="agent-status">Active</div>
           </div>
-          <div class="agent-info">
-            <h3>Brand Ambassador</h3>
-            <p>A high-visibility agent (often housed in our robotic hardware) designed to engage passersby, capture leads, and provide a memorable physical "face" for your digital infrastructure.</p>
+          <div class="agent-card-right">
+            <div class="agent-info-header">
+              <h3>Brand Ambassador</h3>
+              <div class="agent-status">Active</div>
+            </div>
+            <div class="agent-info">
+              <p>A high-visibility agent (often housed in our robotic hardware) designed to engage passersby, capture leads, and provide a memorable physical "face" for your digital infrastructure.</p>
+            </div>
           </div>
         </div>
       </div>
