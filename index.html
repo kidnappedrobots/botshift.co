@@ -599,21 +599,27 @@
 
     .agent-row:last-child { border-bottom: none; }
 
-    .agent-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .agent-ascii {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.45rem;
+      line-height: 1.25;
+      white-space: pre;
+      color: #555;
       flex-shrink: 0;
     }
 
-    .agent-icon svg {
-      width: 20px;
-      height: 20px;
+    .agent-ascii .eye {
+      color: var(--accent);
+      animation: blink 4s infinite;
     }
+
+    .agent-ascii .eye-r {
+      color: var(--accent);
+      animation: blink 4s infinite;
+      animation-delay: 0.1s;
+    }
+
+    .agent-ascii .ac { color: var(--accent); }
 
     .agent-info { flex: 1; }
 
@@ -1141,9 +1147,13 @@
       <p class="agents-intro fade-in">Our agents aren't just chatbots; they are functional members of your team designed for specific business outcomes.</p>
       <div class="agents-roster fade-in">
         <div class="agent-row">
-          <div class="agent-icon">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M10 2L18 10L10 18L2 10Z" stroke="var(--accent)" stroke-width="1.5"/></svg>
-          </div>
+          <div class="agent-ascii">      Y__
+    _/<span class="eye">q</span> <span class="eye-r">p</span>\_
+     \_<span class="ac">O</span>_/
+   .=(+++)=.
+o="  (___)  "=o
+     /| |\
+    (0) (0)</div>
           <div class="agent-info">
             <h3>The Concierge</h3>
             <p>A multi-lingual digital expert that handles bookings, local recommendations, and instant guest requests across mobile, kiosk, and robotic interfaces.</p>
@@ -1151,9 +1161,13 @@
           <div class="agent-status">Active</div>
         </div>
         <div class="agent-row">
-          <div class="agent-icon">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
+          <div class="agent-ascii">     .---.
+    } <span class="eye">u</span> <span class="eye-r">u</span> {
+     \_<span class="ac">r</span>_/
+   .=(+++)=.
+o="  (___)  "=o
+     /7 [|
+   \/7  [|_</div>
           <div class="agent-info">
             <h3>Sales &amp; Upsell</h3>
             <p>An intelligent operator that analyzes guest behavior and timing to offer personalized upgrades, spa bookings, or dining reservations exactly when the guest is most likely to convert.</p>
@@ -1161,9 +1175,13 @@
           <div class="agent-status">Active</div>
         </div>
         <div class="agent-row">
-          <div class="agent-icon">
-            <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="var(--accent)" stroke-width="1.5"/><path d="M3 8H17" stroke="var(--accent)" stroke-width="1.5"/></svg>
-          </div>
+          <div class="agent-ascii">     |---|
+     |<span class="eye">n</span> <span class="eye-r">n</span>|
+     |_<span class="ac">-</span>_|
+    /|(\)|\
+   d |___| b
+     |_|_|
+     /_|_\</div>
           <div class="agent-info">
             <h3>Operations Architect</h3>
             <p>A backend agent that monitors inventory, schedules maintenance, and coordinates between departments to ensure the physical facility runs as smoothly as the software.</p>
@@ -1171,9 +1189,13 @@
           <div class="agent-status">Active</div>
         </div>
         <div class="agent-row">
-          <div class="agent-icon">
-            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="var(--accent)" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
+          <div class="agent-ascii">      __i
+     [<span class="eye">o</span> <span class="eye-r">o</span>]
+      <span class="ac">]</span>-<span class="ac">[</span>
+   .=(+++)=.
+o="  (___)  "=o
+     |_|_|
+     /_|_\</div>
           <div class="agent-info">
             <h3>Brand Ambassador</h3>
             <p>A high-visibility agent (often housed in our robotic hardware) designed to engage passersby, capture leads, and provide a memorable physical "face" for your digital infrastructure.</p>
