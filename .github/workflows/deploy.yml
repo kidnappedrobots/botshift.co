@@ -19,12 +19,10 @@ jobs:
           username: u805827262.botshiftnew
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /domains/botshift.co/public_html/
+          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.git*/**
             **/.DS_Store
             **/legallegendspp/**
-            **/resources/**
-            **/mediakit/**
             **/*.fig
-            **/*.pdf
