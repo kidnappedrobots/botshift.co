@@ -241,12 +241,32 @@
     /* ── ASCII ROBOT ── */
     .ascii-robot {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1rem;
+      font-size: 1.3rem;
       line-height: 1.35;
       white-space: pre;
       color: #666;
       opacity: 0;
-      animation: typeIn 0.6s 3.2s forwards;
+    }
+
+    .ascii-robot.visible {
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    .robot-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-top: 0.75rem;
+      opacity: 0;
+    }
+
+    .robot-name.visible {
+      opacity: 1;
+      transition: opacity 0.6s ease;
     }
 
     .ascii-robot .eye {
@@ -364,11 +384,17 @@
       line-height: 1.65;
     }
 
+    .results-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
     .results-hero-img {
       width: 100%;
-      max-width: 900px;
-      display: block;
-      margin: 3rem auto 0;
+      border-radius: 4px;
     }
 
     /* ── PROCESS ── */
@@ -820,6 +846,10 @@
 
       .hero-status { justify-content: center; }
 
+      .results-layout {
+        grid-template-columns: 1fr;
+      }
+
       .vision-content {
         grid-template-columns: 1fr;
       }
@@ -827,10 +857,6 @@
       .vision-graphic { order: -1; }
 
       .vision-graphic img { max-width: 600px; }
-
-      .results-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
 
       .team-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -938,6 +964,7 @@
           <div class="boot-line"><span style="color: var(--accent); font-weight: 600;">READY_</span><span class="cursor-blink"></span></div>
         </div>
         <div class="ascii-robot" id="asciiRobot"></div>
+        <div class="robot-name" id="robotName"></div>
       </div>
     </div>
   </section>
@@ -947,33 +974,37 @@
     <div class="container">
       <div class="section-label fade-in">// impact</div>
       <h2 class="section-title fade-in">We Build For Business Impact</h2>
-      <div class="results-grid fade-in">
-        <div class="result-cell">
-          <div class="num">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
-            01
+      <div class="results-layout">
+        <div>
+          <div class="results-grid fade-in" style="grid-template-columns: 1fr;">
+            <div class="result-cell">
+              <div class="num">
+                <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
+                01
+              </div>
+              <h3>Drive Revenue</h3>
+              <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
+            </div>
+            <div class="result-cell">
+              <div class="num">
+                <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                02
+              </div>
+              <h3>Scale Efficiency</h3>
+              <p>Offload 80% of mundane tasks to digital agents, freeing your human team for high-value guest interactions.</p>
+            </div>
+            <div class="result-cell">
+              <div class="num">
+                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
+                03
+              </div>
+              <h3>Attract Attention</h3>
+              <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
+            </div>
           </div>
-          <h3>Drive Revenue</h3>
-          <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
         </div>
-        <div class="result-cell">
-          <div class="num">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            02
-          </div>
-          <h3>Scale Efficiency</h3>
-          <p>Offload 80% of mundane administrative and repetitive tasks to digital agents, allowing your human team to focus on high-value guest interactions.</p>
-        </div>
-        <div class="result-cell">
-          <div class="num">
-            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
-            03
-          </div>
-          <h3>Attract Attention</h3>
-          <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
-        </div>
+        <img src="/images/generated/results.png" alt="Phone showing AI upsell offer in hotel lobby with robot walking past" class="results-hero-img fade-in">
       </div>
-      <img src="/images/generated/results.png" alt="Phone showing AI upsell offer in hotel lobby with robot walking past" class="results-hero-img fade-in">
     </div>
   </section>
 
@@ -1230,19 +1261,37 @@
       });
     });
 
-    // ASCII Robot randomization
+    // ASCII Robot randomization with unit names
     var robots = [
-      '      Y__      \n    _/<span class="eye">q</span> <span class="eye-r">p</span>\\_    \n     \\_<span class="ac">O</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /| |\\     \n    (0) (0)   ',
-      '     .---.     \n    } <span class="eye">u</span> <span class="eye-r">u</span> {    \n     \\_<span class="ac">r</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /7 [|     \n   \\/7  [|_    ',
-      '     _._._     \n    -)<span class="eye">q</span> <span class="eye-r">q</span>(-    \n     \\_<span class="ac">e</span>_/     \n   ,"|+  |".   \n   _\\|+__|/_   \n     /7 [|     \n   \\/7  [|_    ',
-      '     .---.     \n    } <span class="eye">q</span> <span class="eye-r">p</span> {    \n     \\_<span class="ac">-</span>_/     \n}-. /\\--o/\\ .-{\n   " |___| "   \n     // \\\\     \n    _\\\\ //_    ',
-      '     |---|     \n     |<span class="eye">n</span> <span class="eye-r">n</span>|     \n     |_<span class="ac">-</span>_|     \n    /|(\\)|\\    \n   d |___| b   \n     |_|_|     \n     /_|_\\     ',
-      '      __i      \n     [<span class="eye">o</span> <span class="eye-r">o</span>]     \n      <span class="ac">]</span>-<span class="ac">[</span>      \n   .=(+++)=.   \no="  (___)  "=o\n     |_|_|     \n     /_|_\\     '
+      { art: '      Y__      \n    _/<span class="eye">q</span> <span class="eye-r">p</span>\\_    \n     \\_<span class="ac">O</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /| |\\     \n    (0) (0)   ', name: 'Unit-01 "Classic"' },
+      { art: '     .---.     \n    } <span class="eye">u</span> <span class="eye-r">u</span> {    \n     \\_<span class="ac">r</span>_/     \n   .=(+++)=.   \no="  (___)  "=o\n     /7 [|     \n   \\/7  [|_    ', name: 'Unit-02 "Scout"' },
+      { art: '     _._._     \n    -)<span class="eye">q</span> <span class="eye-r">q</span>(-    \n     \\_<span class="ac">e</span>_/     \n   ,"|+  |".   \n   _\\|+__|/_   \n     /7 [|     \n   \\/7  [|_    ', name: 'Unit-03 "Antenna"' },
+      { art: '     .---.     \n    } <span class="eye">q</span> <span class="eye-r">p</span> {    \n     \\_<span class="ac">-</span>_/     \n}-. /\\--o/\\ .-{\n   " |___| "   \n     // \\\\     \n    _\\\\ //_    ', name: 'Unit-04 "Heavy"' },
+      { art: '     |---|     \n     |<span class="eye">n</span> <span class="eye-r">n</span>|     \n     |_<span class="ac">-</span>_|     \n    /|(\\)|\\    \n   d |___| b   \n     |_|_|     \n     /_|_\\     ', name: 'Unit-05 "Box"' },
+      { art: '      __i      \n     [<span class="eye">o</span> <span class="eye-r">o</span>]     \n      <span class="ac">]</span>-<span class="ac">[</span>      \n   .=(+++)=.   \no="  (___)  "=o\n     |_|_|     \n     /_|_\\     ', name: 'Unit-06 "Visor"' }
     ];
 
     var robotEl = document.getElementById('asciiRobot');
+    var robotNameEl = document.getElementById('robotName');
+    var bootEl = document.querySelector('.boot-sequence');
+    var pick = robots[Math.floor(Math.random() * robots.length)];
+
     if (robotEl) {
-      robotEl.innerHTML = robots[Math.floor(Math.random() * robots.length)];
+      robotEl.innerHTML = pick.art;
+      if (robotNameEl) robotNameEl.textContent = pick.name;
+
+      // After boot sequence finishes (~3.2s), hide boot and show robot
+      setTimeout(function() {
+        if (bootEl) {
+          bootEl.style.transition = 'opacity 0.4s';
+          bootEl.style.opacity = '0';
+          setTimeout(function() {
+            bootEl.style.display = 'none';
+            robotEl.classList.add('visible');
+            if (robotNameEl) robotNameEl.classList.add('visible');
+          }, 400);
+        }
+      }, 3200);
     }
 
     // Scroll-triggered fade-in
