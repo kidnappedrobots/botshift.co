@@ -365,29 +365,32 @@
 
     .result-cell {
       background: var(--bg-elevated);
-      padding: 2rem;
-    }
-
-    .result-cell .num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .result-cell .num svg {
-      width: 20px;
-      height: 20px;
+      padding: 1.25rem 1.5rem;
     }
 
     .result-cell h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .result-cell h3 .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      min-width: 1.5rem;
+    }
+
+    .result-cell h3 svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
     }
 
     .result-cell p {
@@ -400,7 +403,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
-      align-items: start;
+      align-items: center;
       margin-top: 2.5rem;
     }
 
@@ -410,29 +413,27 @@
     }
 
     /* ── PROCESS ── */
-    .what-funnel {
-      display: flex;
-      flex-direction: column;
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      align-items: start;
       margin-top: 2.5rem;
-      max-width: 650px;
     }
 
-    .what-step {
-      display: flex;
-      align-items: stretch;
+    .process-step {
+      padding: 0 1.5rem;
     }
 
-    .step-indicator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 56px;
-      flex-shrink: 0;
+    .process-connector {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
     }
 
     .step-number {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -442,42 +443,61 @@
       font-weight: 600;
       color: var(--bg-primary);
       background: var(--accent);
-      position: relative;
-      z-index: 2;
+      margin-bottom: 1rem;
     }
 
-    .step-line {
-      flex: 1;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .what-step:last-child .step-line { display: none; }
-
-    .step-content {
-      flex: 1;
-      padding: 0.5rem 0 2.5rem 1.5rem;
-    }
-
-    .step-content .step-label {
+    .process-step .step-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: var(--text-muted);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 0.5rem;
     }
 
-    .step-content p {
-      font-size: 1rem;
+    .process-step p {
+      font-size: 0.95rem;
       color: var(--text-secondary);
       line-height: 1.7;
-      max-width: 500px;
     }
 
-    .what-step:first-child .step-content p {
-      color: var(--text-primary);
-      font-weight: 500;
+    .process-bar-track {
+      height: 2px;
+      background: var(--border);
+      margin-bottom: 2.5rem;
+      margin-top: 2rem;
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .process-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 1px;
+      transition: width 0.1s linear;
+    }
+
+    .process-bar-dots {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .process-bar-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+
+    .process-bar-dot.active {
+      background: var(--accent);
     }
 
     /* ── VISION ── */
@@ -908,6 +928,19 @@
         grid-template-columns: 1fr;
       }
 
+      .process-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .process-connector {
+        display: none;
+      }
+
+      .process-step {
+        padding: 0;
+      }
+
       .philosophy-divider {
         height: 1px;
         width: 100%;
@@ -990,27 +1023,27 @@
         <div>
           <div class="results-grid fade-in" style="grid-template-columns: 1fr;">
             <div class="result-cell">
-              <div class="num">
+              <h3>
+                <span class="num">01</span>
                 <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
-                01
-              </div>
-              <h3>Drive Revenue</h3>
+                Drive Revenue
+              </h3>
               <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
             </div>
             <div class="result-cell">
-              <div class="num">
+              <h3>
+                <span class="num">02</span>
                 <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                02
-              </div>
-              <h3>Scale Efficiency</h3>
+                Scale Efficiency
+              </h3>
               <p>Offload 80% of mundane tasks to digital agents, freeing your human team for high-value guest interactions.</p>
             </div>
             <div class="result-cell">
-              <div class="num">
+              <h3>
+                <span class="num">03</span>
                 <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
-                03
-              </div>
-              <h3>Attract Attention</h3>
+                Attract Attention
+              </h3>
               <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
             </div>
           </div>
@@ -1025,35 +1058,31 @@
     <div class="container">
       <div class="section-label fade-in">// process</div>
       <h2 class="section-title fade-in">Our Process To Grow KPIs</h2>
-      <div class="what-funnel">
-        <div class="what-step fade-in">
-          <div class="step-indicator">
-            <div class="step-number">01</div>
-            <div class="step-line"></div>
-          </div>
-          <div class="step-content">
-            <div class="step-label">Automate</div>
-            <p>We automate necessary jobs inside your business, end-to-end.</p>
-          </div>
+      <div class="process-bar-track fade-in" id="processBarTrack">
+        <div class="process-bar-fill" id="processBarFill"></div>
+        <div class="process-bar-dots">
+          <div class="process-bar-dot" id="dot1"></div>
+          <div class="process-bar-dot" id="dot2"></div>
+          <div class="process-bar-dot" id="dot3"></div>
         </div>
-        <div class="what-step fade-in">
-          <div class="step-indicator">
-            <div class="step-number">02</div>
-            <div class="step-line"></div>
-          </div>
-          <div class="step-content">
-            <div class="step-label">Optimize</div>
-            <p>We create data engines to optimize automated workflows to maximize revenue.</p>
-          </div>
+      </div>
+      <div class="process-grid fade-in">
+        <div class="process-step">
+          <div class="step-number">01</div>
+          <div class="step-label">Automate</div>
+          <p>We automate necessary jobs inside your business, end-to-end.</p>
         </div>
-        <div class="what-step fade-in">
-          <div class="step-indicator">
-            <div class="step-number">03</div>
-          </div>
-          <div class="step-content">
-            <div class="step-label">Physicalize</div>
-            <p>We make your business unforgettable through AI physical presence.</p>
-          </div>
+        <div class="process-connector"></div>
+        <div class="process-step">
+          <div class="step-number">02</div>
+          <div class="step-label">Optimize</div>
+          <p>We create data engines to optimize automated workflows to maximize revenue.</p>
+        </div>
+        <div class="process-connector"></div>
+        <div class="process-step">
+          <div class="step-number">03</div>
+          <div class="step-label">Physicalize</div>
+          <p>We make your business unforgettable through AI physical presence.</p>
         </div>
       </div>
     </div>
@@ -1318,6 +1347,32 @@
     document.querySelectorAll('.fade-in').forEach(function(el) {
       observer.observe(el);
     });
+
+    // Process section scroll progress bar
+    var processSection = document.getElementById('what-we-do');
+    var processBarFill = document.getElementById('processBarFill');
+    var dots = [document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
+
+    if (processSection && processBarFill) {
+      window.addEventListener('scroll', function() {
+        var rect = processSection.getBoundingClientRect();
+        var sectionTop = rect.top;
+        var sectionHeight = rect.height;
+        var windowHeight = window.innerHeight;
+
+        // Progress starts when section enters viewport, ends when it leaves
+        var start = sectionTop - windowHeight * 0.7;
+        var end = sectionTop + sectionHeight - windowHeight * 0.3;
+        var progress = Math.max(0, Math.min(1, -start / (end - start)));
+
+        processBarFill.style.width = (progress * 100) + '%';
+
+        // Activate dots at 0%, 50%, 100%
+        dots[0].classList.toggle('active', progress >= 0.05);
+        dots[1].classList.toggle('active', progress >= 0.4);
+        dots[2].classList.toggle('active', progress >= 0.75);
+      }, { passive: true });
+    }
   </script>
 </body>
 </html>
