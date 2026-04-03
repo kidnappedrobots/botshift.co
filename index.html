@@ -200,6 +200,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.8;
+      white-space: nowrap;
       position: absolute;
       top: 0;
       left: 0;
@@ -1416,9 +1417,9 @@ o="  (___)  "=o
         var rect = processSection.getBoundingClientRect();
         var windowHeight = window.innerHeight;
 
-        // Progress: 0 when section top hits 70% viewport, 1 when bottom hits 30%
-        var start = rect.top - windowHeight * 0.7;
-        var end = rect.top + rect.height - windowHeight * 0.3;
+        // Progress: 0 when section enters viewport, 1 when section is centered
+        var start = rect.top - windowHeight * 0.8;
+        var end = rect.top + rect.height * 0.4;
         var progress = Math.max(0, Math.min(1, -start / (end - start)));
 
         processBarFill.style.width = (progress * 100) + '%';
