@@ -79,7 +79,7 @@
     }
 
     .nav-logo {
-      height: 40px;
+      height: 64px;
       width: auto;
     }
 
@@ -281,45 +281,51 @@
       color: var(--accent-blue-light);
     }
 
-    .iframe-wrap {
+    .preview-wrap {
       position: relative;
       width: 100%;
       height: 500px;
-      background: #111;
+      background: #080b1a;
+      overflow: hidden;
     }
 
-    .iframe-wrap iframe {
+    .preview-wrap img {
       width: 100%;
       height: 100%;
-      border: none;
-      transform-origin: 0 0;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
     }
 
-    .iframe-overlay {
+    .preview-link {
       position: absolute;
       inset: 0;
-      cursor: pointer;
-      z-index: 2;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 20px;
-      background: linear-gradient(to top, rgba(0,2,21,0.7) 0%, transparent 40%);
+      padding-bottom: 24px;
+      background: linear-gradient(to top, rgba(0,2,21,0.8) 0%, rgba(0,2,21,0.1) 50%, transparent 100%);
+      text-decoration: none;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
 
-    .iframe-wrap:hover .iframe-overlay {
+    .preview-wrap:hover .preview-link {
       opacity: 1;
     }
 
-    .iframe-overlay span {
+    .preview-link span {
       background: var(--accent-blue);
       color: white;
       font-size: 13px;
       font-weight: 500;
-      padding: 8px 20px;
+      padding: 10px 24px;
       border-radius: 100px;
+      transition: background 0.2s ease;
+    }
+
+    .preview-link:hover span {
+      background: var(--accent-blue-light);
     }
 
     /* ── Timeline ── */
@@ -519,7 +525,7 @@
     }
 
     footer .footer-logo {
-      height: 32px;
+      height: 48px;
       margin-bottom: 12px;
       opacity: 0.6;
     }
@@ -610,6 +616,114 @@
       font-weight: 500;
     }
 
+    /* ── Password Gate ── */
+    #password-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #password-gate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(30, 122, 230, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .gate-content {
+      position: relative;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    .gate-logo {
+      height: 80px;
+      margin-bottom: 32px;
+      opacity: 0.9;
+    }
+
+    .gate-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .gate-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .gate-input-wrap {
+      display: flex;
+      gap: 10px;
+    }
+
+    .gate-input {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .gate-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .gate-input.shake {
+      animation: shake 0.4s ease;
+      border-color: #ef4444;
+    }
+
+    .gate-btn {
+      padding: 14px 24px;
+      border-radius: 12px;
+      background: var(--accent-blue);
+      color: white;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .gate-btn:hover {
+      background: var(--accent-blue-light);
+    }
+
+    .gate-error {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #ef4444;
+      height: 20px;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    body.locked { overflow: hidden; }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .comparison {
@@ -651,7 +765,45 @@
     }
   </style>
 </head>
-<body>
+<body class="locked">
+
+  <!-- Password Gate -->
+  <div id="password-gate">
+    <div class="gate-content">
+      <img src="../images/logo.png" alt="BotShift" class="gate-logo">
+      <h2 class="gate-title">This proposal is private</h2>
+      <p class="gate-subtitle">Enter the password to view this document.</p>
+      <form class="gate-input-wrap" onsubmit="return checkPassword(event)">
+        <input type="password" id="gate-pw" class="gate-input" placeholder="Password" autocomplete="off" autofocus>
+        <button type="submit" class="gate-btn">Enter</button>
+      </form>
+      <p class="gate-error" id="gate-error"></p>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword(e) {
+      e.preventDefault();
+      var input = document.getElementById('gate-pw');
+      if (input.value === 'legallegends') {
+        document.getElementById('password-gate').style.display = 'none';
+        document.body.classList.remove('locked');
+        sessionStorage.setItem('pp_auth', '1');
+      } else {
+        input.classList.add('shake');
+        document.getElementById('gate-error').textContent = 'Incorrect password. Please try again.';
+        setTimeout(function() { input.classList.remove('shake'); }, 400);
+        input.value = '';
+        input.focus();
+      }
+      return false;
+    }
+    // Remember for the session
+    if (sessionStorage.getItem('pp_auth') === '1') {
+      document.getElementById('password-gate').style.display = 'none';
+      document.body.classList.remove('locked');
+    }
+  </script>
 
   <!-- Navigation -->
   <nav>
@@ -719,15 +871,10 @@
             <div class="comparison-dot dot-current"></div>
             <span>Current Website</span>
           </div>
-          <div class="iframe-wrap">
-            <iframe
-              src="https://legallegendsindonesia.com/"
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin"
-              title="Current Legal Legends website"
-            ></iframe>
-            <a class="iframe-overlay" href="https://legallegendsindonesia.com/" target="_blank" rel="noopener">
-              <span>Open in new tab &rarr;</span>
+          <div class="preview-wrap">
+            <img src="https://image.thum.io/get/width/800/crop/1000/https://legallegendsindonesia.com/" alt="Current Legal Legends website" loading="lazy">
+            <a class="preview-link" href="https://legallegendsindonesia.com/" target="_blank" rel="noopener">
+              <span>View live site &rarr;</span>
             </a>
           </div>
         </div>
@@ -743,15 +890,10 @@
             <div class="comparison-dot dot-new"></div>
             <span>New Figma Design</span>
           </div>
-          <div class="iframe-wrap">
-            <iframe
-              src="https://www.figma.com/proto/ZjLnsY6iBELDu4Bbtx7edG/Legal-Legend?page-id=0%3A1&node-id=228-1659&viewport=15%2C510%2C0.13&t=98zwEWcJoaZJqXit-1&scaling=min-zoom&content-scaling=fixed&hide-ui=1"
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin allow-popups"
-              title="New Legal Legends Figma design"
-            ></iframe>
-            <a class="iframe-overlay" href="https://www.figma.com/proto/ZjLnsY6iBELDu4Bbtx7edG/Legal-Legend?page-id=0%3A1&node-id=228-1659&viewport=15%2C510%2C0.13&t=98zwEWcJoaZJqXit-1&scaling=min-zoom&content-scaling=fixed" target="_blank" rel="noopener">
-              <span>Open in new tab &rarr;</span>
+          <div class="preview-wrap">
+            <img src="https://image.thum.io/get/width/800/crop/1000/https://www.figma.com/proto/ZjLnsY6iBELDu4Bbtx7edG/Legal-Legend?page-id=0%3A1&node-id=228-1659&viewport=15%2C510%2C0.13&t=98zwEWcJoaZJqXit-1&scaling=min-zoom&content-scaling=fixed" alt="New Legal Legends Figma design" loading="lazy">
+            <a class="preview-link" href="https://www.figma.com/proto/ZjLnsY6iBELDu4Bbtx7edG/Legal-Legend?page-id=0%3A1&node-id=228-1659&viewport=15%2C510%2C0.13&t=98zwEWcJoaZJqXit-1&scaling=min-zoom&content-scaling=fixed" target="_blank" rel="noopener">
+              <span>View Figma prototype &rarr;</span>
             </a>
           </div>
         </div>
@@ -867,24 +1009,6 @@
         <p class="pricing-note">
           50/50 split. First payment starts the project. Second payment is due upon final delivery and sign-off.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Ready to get started?</h2>
-      <p>Let's give Legal Legends the digital presence it deserves.</p>
-      <div class="cta-buttons">
-        <a href="mailto:hello@botshift.co" class="btn btn-primary">
-          Let's Go &rarr;
-        </a>
-        <a href="https://www.figma.com/proto/ZjLnsY6iBELDu4Bbtx7edG/Legal-Legend?page-id=0%3A1&node-id=228-1659&viewport=15%2C510%2C0.13&t=98zwEWcJoaZJqXit-1&scaling=min-zoom&content-scaling=fixed" target="_blank" rel="noopener" class="btn btn-outline">
-          View Full Figma &rarr;
-        </a>
       </div>
     </div>
   </section>
