@@ -49,8 +49,15 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo { display: flex; align-items: center; text-decoration: none; }
-    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; gap: 0.6rem; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-logo span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+    }
 
     .nav-links {
       display: flex;
@@ -999,6 +1006,7 @@
   <nav>
     <a href="#" class="nav-logo">
       <img src="/images/logo.png" alt="Bot Shift">
+      <span>Bot Shift</span>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#what-we-do">What We Do</a></li>
