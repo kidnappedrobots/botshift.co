@@ -584,28 +584,33 @@
     }
 
     .agents-roster {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
       border: 1px solid var(--border);
       border-radius: 4px;
       overflow: hidden;
     }
 
-    .agent-row {
-      display: flex;
-      align-items: center;
-      padding: 1.25rem 1.5rem;
-      gap: 1.25rem;
-      border-bottom: 1px solid var(--border);
+    .agent-card {
+      background: var(--bg-elevated);
+      padding: 2rem;
     }
 
-    .agent-row:last-child { border-bottom: none; }
+    .agent-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
 
     .agent-ascii {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.45rem;
-      line-height: 1.25;
+      font-size: 0.55rem;
+      line-height: 1.2;
       white-space: pre;
       color: #555;
-      flex-shrink: 0;
     }
 
     .agent-ascii .eye {
@@ -621,28 +626,25 @@
 
     .agent-ascii .ac { color: var(--accent); }
 
-    .agent-info { flex: 1; }
-
     .agent-info h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.5rem;
     }
 
     .agent-info p {
       color: var(--text-secondary);
-      font-size: 0.85rem;
-      line-height: 1.5;
+      font-size: 0.9rem;
+      line-height: 1.6;
     }
 
     .agent-status {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      flex-shrink: 0;
     }
 
     .agents-more {
@@ -654,57 +656,71 @@
     }
 
     /* ── WHY ── */
-    .why-lead {
+    .why-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .why-text .why-lead {
       font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.7;
-      max-width: 780px;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
-    .why-lead strong { color: var(--text-primary); }
+    .why-text .why-lead strong { color: var(--text-primary); }
 
-    .why-statement {
+    .why-text .why-statement {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.3rem;
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
     }
 
-    .why-context {
-      font-size: 1rem;
+    .why-text .why-context {
+      font-size: 0.95rem;
       color: var(--text-secondary);
-      max-width: 780px;
       line-height: 1.7;
-      margin-bottom: 2.5rem;
     }
 
-    .why-blocks {
+    .why-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
       border: 1px solid var(--border);
       border-radius: 4px;
       overflow: hidden;
     }
 
-    .why-block {
-      padding: 2rem 2.5rem;
+    .why-card {
+      padding: 1.5rem;
+      background: var(--bg-primary);
     }
 
-    .why-block + .why-block {
-      border-top: 1px solid var(--border);
+    .why-card .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
     }
 
-    .why-block h3 {
+    .why-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
-      color: var(--accent);
     }
 
-    .why-block p {
+    .why-card p {
       color: var(--text-secondary);
-      font-size: 0.95rem;
-      line-height: 1.65;
+      font-size: 0.85rem;
+      line-height: 1.6;
     }
 
     /* ── TEAM ── */
@@ -953,6 +969,10 @@
 
       .process-step p {
         color: var(--text-secondary);
+      }
+
+      .why-layout {
+        grid-template-columns: 1fr;
       }
 
       .philosophy-divider {
@@ -1212,17 +1232,23 @@ o="  (___)  "=o
     <div class="container">
       <div class="section-label fade-in">// why bot shift</div>
       <h2 class="section-title fade-in">Results Over Technology</h2>
-      <p class="why-lead fade-in"><strong>We work backwards from your business outcomes.</strong> Most AI companies sell you a tool and ask you to find a use for it. We do the opposite. We identify your revenue bottlenecks and deploy the specific AI agents required to break them. We don't deliver nebulous technical projects — we deliver operational results.</p>
-      <p class="why-statement fade-in">We don't sell technology. We sell revenue, cost reductions, and experiences.</p>
-      <p class="why-context fade-in">Most companies are focused on either software or hardware. We focus on company KPIs while ensuring your AI is ready for the physical world tomorrow.</p>
-      <div class="why-blocks fade-in">
-        <div class="why-block">
-          <h3>Zero Migration</h3>
-          <p>When the robots arrive, you don't start over. Your agent already knows your customers, your inventory, and your brand voice.</p>
+      <div class="why-layout fade-in">
+        <div class="why-text">
+          <p class="why-lead"><strong>We work backwards from your business outcomes.</strong> Most AI companies sell you a tool and ask you to find a use for it. We do the opposite. We identify your revenue bottlenecks and deploy the specific AI agents required to break them.</p>
+          <p class="why-statement">We don't sell technology. We sell revenue, cost reductions, and experiences.</p>
+          <p class="why-context">Most companies are focused on either software or hardware. We focus on company KPIs while ensuring your AI is ready for the physical world tomorrow.</p>
         </div>
-        <div class="why-block">
-          <h3>Future-Proofed ROI</h3>
-          <p>Every dollar spent on AI automation today is a down payment on your future physical presence.</p>
+        <div class="why-cards">
+          <div class="why-card">
+            <div class="card-num">01</div>
+            <h3>Zero Migration</h3>
+            <p>When the robots arrive, you don't start over. Your agent already knows your customers, your inventory, and your brand voice.</p>
+          </div>
+          <div class="why-card">
+            <div class="card-num">02</div>
+            <h3>Future-Proofed ROI</h3>
+            <p>Every dollar spent on AI automation today is a down payment on your future physical presence.</p>
+          </div>
         </div>
       </div>
     </div>
