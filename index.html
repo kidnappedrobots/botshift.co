@@ -373,51 +373,41 @@
 
     .result-cell {
       background: var(--bg-elevated);
-      padding: 1.25rem 1.5rem;
+      padding: 2.5rem 2rem;
+    }
+
+    .result-cell .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--border);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .result-cell .icon {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-cell .icon svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
     }
 
     .result-cell h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .result-cell h3 .num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      flex-shrink: 0;
-      min-width: 1.5rem;
-    }
-
-    .result-cell h3 svg {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
     }
 
     .result-cell p {
       color: var(--text-secondary);
-      font-size: 0.9rem;
-      line-height: 1.65;
-    }
-
-    .results-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-      margin-top: 2.5rem;
-    }
-
-    .results-hero-img {
-      width: 100%;
-      border-radius: 4px;
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     /* ── PROCESS ── */
@@ -892,7 +882,7 @@
 
       .hero-status { justify-content: center; }
 
-      .results-layout {
+      .results-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1058,36 +1048,31 @@
     <div class="container">
       <div class="section-label fade-in">// impact</div>
       <h2 class="section-title fade-in">We Build For Business Impact</h2>
-      <div class="results-layout">
-        <div>
-          <div class="results-grid fade-in" style="grid-template-columns: 1fr;">
-            <div class="result-cell">
-              <h3>
-                <span class="num">01</span>
-                <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
-                Drive Revenue
-              </h3>
-              <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
-            </div>
-            <div class="result-cell">
-              <h3>
-                <span class="num">02</span>
-                <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Scale Efficiency
-              </h3>
-              <p>Offload 80% of mundane tasks to digital agents, freeing your human team for high-value guest interactions.</p>
-            </div>
-            <div class="result-cell">
-              <h3>
-                <span class="num">03</span>
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
-                Attract Attention
-              </h3>
-              <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
-            </div>
+      <div class="results-grid fade-in">
+        <div class="result-cell">
+          <div class="num">01</div>
+          <div class="icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M3 17L8 9L12 13L17 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3>Drive Revenue</h3>
           </div>
+          <p>Create high-frequency, contextual customer touchpoints that identify upsell opportunities in real-time.</p>
         </div>
-        <img src="/images/generated/results.png" alt="Phone showing AI upsell offer in hotel lobby with robot walking past" class="results-hero-img fade-in">
+        <div class="result-cell">
+          <div class="num">02</div>
+          <div class="icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 13.5l6-7.5L8.5 10.5h7.5L10.5 17.5 11.5 13.5H4z" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Scale Efficiency</h3>
+          </div>
+          <p>Offload 80% of mundane tasks to digital agents, freeing your human team for high-value guest interactions.</p>
+        </div>
+        <div class="result-cell">
+          <div class="num">03</div>
+          <div class="icon">
+            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="var(--accent)" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="var(--accent)"/></svg>
+            <h3>Attract Attention</h3>
+          </div>
+          <p>Turn your physical space into a destination by making your business an unforgettable, tech-forward experience.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1127,7 +1112,7 @@
     <div class="container">
       <div class="vision-content">
         <div class="vision-graphic fade-in">
-          <img src="/images/generated/vision-hero.png" alt="Modern robot walking through a hotel corridor alongside guests">
+          <img src="/images/generated/results.png" alt="Phone showing AI upsell offer in hotel lobby with robot walking past">
         </div>
         <div class="vision-text">
           <div class="section-label fade-in">// the vision</div>
@@ -1419,7 +1404,7 @@ o="  (___)  "=o
 
         // Progress: 0 when section enters viewport, 1 when section is centered
         var start = rect.top - windowHeight * 0.8;
-        var end = rect.top + rect.height * 0.4;
+        var end = rect.top + rect.height * 0.1;
         var progress = Math.max(0, Math.min(1, -start / (end - start)));
 
         processBarFill.style.width = (progress * 100) + '%';
