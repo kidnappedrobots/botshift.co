@@ -121,7 +121,7 @@
       margin: 0 auto;
       width: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 4rem;
     }
@@ -212,12 +212,12 @@
       animation: typeIn 0.3s forwards;
     }
 
-    .boot-line:nth-child(1) { animation-delay: 0.2s; }
-    .boot-line:nth-child(2) { animation-delay: 0.7s; }
-    .boot-line:nth-child(3) { animation-delay: 1.2s; }
-    .boot-line:nth-child(4) { animation-delay: 1.7s; }
-    .boot-line:nth-child(5) { animation-delay: 2.2s; }
-    .boot-line:nth-child(6) { animation-delay: 2.8s; }
+    .boot-line:nth-child(1) { animation-delay: 0.1s; }
+    .boot-line:nth-child(2) { animation-delay: 0.4s; }
+    .boot-line:nth-child(3) { animation-delay: 0.7s; }
+    .boot-line:nth-child(4) { animation-delay: 1.0s; }
+    .boot-line:nth-child(5) { animation-delay: 1.3s; }
+    .boot-line:nth-child(6) { animation-delay: 1.6s; }
 
     .boot-ok { color: var(--accent); }
     .boot-dim { color: var(--text-muted); }
@@ -941,7 +941,40 @@
 
       .hero { min-height: auto; padding: 8rem 1.5rem 4rem; }
 
-      .hero-right { display: none; }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        text-align: left;
+        gap: 0.75rem;
+      }
+
+      .hero-right {
+        min-width: auto;
+        min-height: auto;
+        margin-top: 0.25rem;
+      }
+
+      .hero-right .boot-sequence { display: none; }
+
+      .hero-right .ascii-robot {
+        position: static;
+        transform: none;
+        font-size: 0.55rem;
+        line-height: 1.2;
+        opacity: 1;
+      }
+
+      .hero-right .ascii-robot.visible { opacity: 1; }
+
+      .hero-right .robot-name {
+        position: static;
+        font-size: 0.4rem;
+        opacity: 1;
+        margin-top: 0.25rem;
+      }
+
+      .hero-status { justify-content: flex-start; }
 
       .results-grid,
       .philosophy-split,
@@ -1411,7 +1444,7 @@ o="  (___)  "=o
       robotEl.innerHTML = pick.art;
       if (robotNameEl) robotNameEl.textContent = pick.name;
 
-      // After boot sequence finishes (~3.2s), hide boot and show robot
+      // After boot sequence finishes (~2s), hide boot and show robot
       setTimeout(function() {
         if (bootEl) {
           bootEl.style.transition = 'opacity 0.4s';
@@ -1422,7 +1455,7 @@ o="  (___)  "=o
             if (robotNameEl) robotNameEl.classList.add('visible');
           }, 400);
         }
-      }, 3200);
+      }, 2000);
     }
 
     // Scroll-triggered fade-in
